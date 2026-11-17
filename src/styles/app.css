@@ -1133,10 +1133,30 @@ html.modal-open {
 
 .form-error {
   margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--color-error);
+  background: #fdf1f0;
   font-size: 14px;
   line-height: 22px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-error);
+}
+.form-error strong {
+  font-weight: 800;
+}
+
+.submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+.submit-hint {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--color-text-muted);
 }
 
 .honey {

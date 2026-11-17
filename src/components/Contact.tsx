@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { config } from "../config";
 import { allDemos } from "../data/demos";
 import { Eyebrow } from "./Eyebrow";
@@ -8,11 +8,64 @@ const STAR = "M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4
 
 type Props = { picked: Set<string> };
 
+/** Give up after this long, so the button never hangs on "Versturen…". */
+const TIMEOUT_MS = 20_000;
+/** After this long, tell the visitor that sending can take a moment. */
+const SLOW_MS = 4_000;
+
+type SendError = { title: string; detail: string };
+
+/** Turn whatever went wrong into a clear Dutch message with the real reason. */
+function explain(err: unknown, serviceMessage?: string): SendError {
+  if (err instanceof DOMException && err.name === "AbortError") {
+    return {
+      title: "Het versturen duurde te lang.",
+      detail: `De verzenddienst reageerde niet binnen ${TIMEOUT_MS / 1000} seconden. Je bericht is waarschijnlijk niet aangekomen; probeer het opnieuw.`,
+    };
+  }
+  if (typeof navigator !== "undefined" && !navigator.onLine) {
+    return {
+      title: "Je bent niet verbonden met internet.",
+      detail: "Controleer je verbinding en probeer het opnieuw. Wat je hebt ingevuld blijft staan.",
+    };
+  }
+  if (err instanceof TypeError) {
+    // fetch() throws a TypeError when the request never reaches the server.
+    return {
+      title: "De verzenddienst is niet bereikbaar.",
+      detail: "Mogelijk blokkeert je netwerk, VPN of adblocker het verzoek. Probeer het op een ander netwerk of later opnieuw.",
+    };
+  }
+  const msg = serviceMessage ?? (err instanceof Error ? err.message : String(err));
+  if (/activat/i.test(msg)) {
+    return {
+      title: "Het formulier is nog niet geactiveerd.",
+      detail: "De ontvanger moet het formulier eerst eenmalig bevestigen via de activatiemail van FormSubmit. Je bericht is niet verstuurd; probeer het later opnieuw.",
+    };
+  }
+  return {
+    title: "De verzenddienst weigerde het bericht.",
+    detail: `Reden: ${msg.replace(/[.\s]+$/, "") || "onbekend"}. Probeer het opnieuw.`,
+  };
+}
+
 export function Contact({ picked }: Props) {
   const [topic, setTopic] = useState(0);
   const [rating, setRating] = useState(0);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState<SendError | null>(null);
+  const [slow, setSlow] = useState(false);
   const sent = status === "sent";
+
+  // While sending, flag "slow" after a few seconds so the visitor knows it's still working.
+  useEffect(() => {
+    if (status !== "sending") return;
+    const t = window.setTimeout(() => setSlow(true), SLOW_MS);
+    return () => {
+      window.clearTimeout(t);
+      setSlow(false);
+    };
+  }, [status]);
 
   const pickedDemos = allDemos.filter((d) => picked.has(d.code));
 
@@ -39,19 +92,32 @@ export function Contact({ picked }: Props) {
     };
 
     setStatus("sending");
+    setError(null);
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
       const res = await fetch(config.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
-      const data = await res.json().catch(() => ({}));
+      const data: { success?: unknown; message?: string } = await res.json().catch(() => ({}));
       // FormSubmit answers { success: "true" | "false", message }.
-      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || `HTTP ${res.status}`);
+      if (!res.ok || String(data.success) !== "true") {
+        const reason = data.message || `HTTP ${res.status} ${res.statusText}`.trim();
+        console.error("Contact form rejected:", reason);
+        setError(explain(new Error(reason), reason));
+        setStatus("error");
+        return;
+      }
       setStatus("sent");
     } catch (err) {
       console.error("Contact form failed:", err);
+      setError(explain(err));
       setStatus("error");
+    } finally {
+      window.clearTimeout(timer);
     }
   };
 
@@ -165,14 +231,21 @@ export function Contact({ picked }: Props) {
               </label>
               {/* Honeypot for spam bots; hidden from people and assistive tech. */}
               <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="honey" aria-hidden="true" />
-              {status === "error" && (
-                <p className="form-error" role="alert">
-                  Versturen lukte niet. Probeer het zo nog eens, of mail ons direct.
-                </p>
+              {status === "error" && error && (
+                <div className="form-error" role="alert">
+                  <strong>{error.title}</strong> {error.detail}
+                </div>
               )}
-              <button type="submit" className="submit" disabled={status === "sending"} aria-busy={status === "sending"}>
-                {status === "sending" ? "Versturen…" : "Verstuur"}
-              </button>
+              <div className="submit-row">
+                <button type="submit" className="submit" disabled={status === "sending"} aria-busy={status === "sending"}>
+                  {status === "sending" ? "Versturen…" : status === "error" ? "Opnieuw versturen" : "Verstuur"}
+                </button>
+                {status === "sending" && slow && (
+                  <span className="submit-hint" role="status">
+                    Nog even geduld, dit kan een paar seconden duren.
+                  </span>
+                )}
+              </div>
             </div>
           </form>
         )}
