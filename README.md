@@ -13,7 +13,7 @@ npm run build    # static output in dist/
 
 ## Filling in content
 
-- **Demos, summaries and takeaways:** `src/data/demos.ts`. Empty `summary` / `takeaways` show a placeholder.
+- **Demos, summaries and takeaways:** `src/data/demos.ts`, filled from the Podium A and B decks. Empty `summary` / `takeaways` show a placeholder.
   Clicking a demo opens an animated pop-up (`src/components/DemoModal.tsx`) with these.
 - **Speaker photos:** add a square image as `src/assets/speakers/<slug>.webp` and set `photo: photo("<slug>")`
   on the demo. Without a photo the pop-up shows the speaker's initials. All 16 speakers have a photo.

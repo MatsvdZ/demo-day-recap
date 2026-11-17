@@ -24,12 +24,7 @@ export type Channel = {
   demos: Demo[];
 };
 
-const empty = (): Pick<Demo, "summary" | "takeaways"> => ({
-  summary: "",
-  takeaways: ["", "", ""],
-});
-
-// Vul per demo een korte samenvatting en drie takeaways in.
+// Per demo: een korte samenvatting en drie takeaways (uit de decks van Podium A en B).
 export const channels: Channel[] = [
   {
     id: "A",
@@ -37,14 +32,70 @@ export const channels: Channel[] = [
     sub: "PODIUM A · KOPTELEFOON OP A",
     codeColor: "var(--red-deep)",
     demos: [
-      { code: "A1", photo: photo("philip"), title: "AI Operating Platform: het fundament.", speaker: "Philip Gast", company: "AdamI", sector: "Retail", ...empty() },
-      { code: "A2", photo: photo("jochem"), title: "AI Aggregatie: alles wat je wilt weten, in één overzicht.", speaker: "Jochem Bouman", company: "AdamI", sector: "Bouw", ...empty() },
-      { code: "A3", photo: photo("roel"), title: "In 1 dag naar een oplossing: The AI Hackathon.", speaker: "Roel Rotteveel", company: "AdamI", sector: "Bouw", ...empty() },
-      { code: "A4", photo: photo("gijs"), title: "De showroom die bij jou past.", speaker: "Gijs Roodenburg", company: "Imagine Digital", sector: "Automotive", ...empty() },
-      { code: "A5", photo: photo("jonathan"), title: "Educatie vertaald naar cartoons.", speaker: "Jonathan van Westendorp", company: "AdamI", sector: "Safety", ...empty() },
-      { code: "A6", photo: photo("titus"), title: "Gevoelige documenten veilig delen, AVG-proof.", speaker: "Titus Driessen", company: "AdamI", sector: "Privacy", ...empty() },
-      { code: "A7", photo: photo("mehul"), title: "Nieuwe wetgeving zoals DORA in minuten vertaald naar concrete eisen.", speaker: "Mehul Mistry", company: "Ace", sector: "Finance", ...empty() },
-      { code: "A8", photo: photo("pieter"), title: "Human-centric process optimization.", speaker: "Pieter de Lange", company: "AdamI", sector: "Logistiek", ...empty() },
+      { code: "A1", photo: photo("philip"), title: "AI Operating Platform: het fundament.", speaker: "Philip Gast", company: "AdamI", sector: "Retail", 
+        summary: "AI-native bedrijven halen een veelvoud van de omzet per medewerker, maar alleen als je je organisatie opnieuw ontwerpt in plaats van je oude proces te versnellen. Philip liet de AI Control Tower zien: de business bouwt zelf de eerste versie van een applicatie, AdamI zet hem duurzaam neer, en je ziet op één plek wat er draait, wat het kost en wat het oplevert.",
+        takeaways: [
+          "Begin bij het doel, niet bij de tool: vraag niet hoe je proces sneller kan, maar wat je wilt bereiken. Kies één proces en schrijf op wat de uitkomst moet zijn.",
+          "Laat de business zelf bouwen: wie het werk kent, weet wat er nodig is en kan het nu ook maken.",
+          "Zet alles op één platform: zonder één fundament wordt elk nieuw idee technical debt. Breng in kaart welke AI-toepassingen er nu al draaien.",
+        ],
+      },
+      { code: "A2", photo: photo("jochem"), title: "AI Aggregatie: alles wat je wilt weten, in één overzicht.", speaker: "Jochem Bouman", company: "AdamI", sector: "Bouw", 
+        summary: "WIJK bouwt binnen een jaar complete woonwijken, maar met welke van de 342 gemeenten begin je? Een AI-agent leest per gemeente alle openbare stukken, stelt elke gemeente dezelfde vragen met bron erbij en maakt er één ranking van. Samen met een CRM en pipeline op maat vormt dat WIJK OS, het systeem waarin het hele bedrijf werkt.",
+        takeaways: [
+          "Structuur is goud waard: de eerste stap van een succesvol AI-project is zoeken naar structuur in je vraag en je data.",
+          "Vergelijken, niet versnellen: de echte winst is niet minder tijd, maar beter onderbouwde beslissingen.",
+          "Bouw AI in op de diepste laag: acht apps plus een AI-tool zijn gewoon negen apps.",
+        ],
+      },
+      { code: "A3", photo: photo("roel"), title: "In 1 dag naar een oplossing: The AI Hackathon.", speaker: "Roel Rotteveel", company: "AdamI", sector: "Bouw", 
+        summary: "Bij de meeste IT-projecten zie je pas na maanden wat er gebouwd wordt, en of dat is wat je bedoelde. In een AI-hackathon bedenk je 's ochtends samen met de klant één idee en klik je om vier uur 's middags door je eigen prototype. Eerst de vlag planten, dan het pad leggen.",
+        takeaways: [
+          "Plant eerst de vlag: gebruik één dag om te weten wát je bouwt, en werk van daaruit terug naar pilot, scope en bouw.",
+          "Maak het meteen tastbaar: iedereen heeft een ander beeld bij dezelfde opdracht, en een fout in de eisen herstellen kost later tot 78 keer zoveel.",
+          "Sneller prototypen is de meest vergeten laag van AI: niet het snelste bouwen, maar het snelste weten wat je moet bouwen.",
+        ],
+      },
+      { code: "A4", photo: photo("gijs"), title: "De showroom die bij jou past.", speaker: "Gijs Roodenburg", company: "Imagine Digital", sector: "Automotive", 
+        summary: "Klanten haakten af in de online showroom van Autolease van Centraal Beheer, en via de traditionele route duurde een nieuwe showroom een jaar. In een vijfdaagse design sprint met Agentic Design, met klant en developers aan één tafel, stond er in een week een nieuwe showroom met een slimme keuzehulp en 40.000 voertuigconfiguraties.",
+        takeaways: [
+          "Co-creatie is je snelste route: betrek stakeholders vanaf dag één, dan is draagvlak geen eindfase maar een bijproduct.",
+          "Een prototype is een gespreksmiddel: maak ideeën direct tastbaar, dan gaat de discussie over het echte ding in plaats van over aannames.",
+          "Agentic Design versnelt co-creatie: met AI kan iedereen meedoen in het ideatie- en ontwerpproces.",
+        ],
+      },
+      { code: "A5", photo: photo("jonathan"), title: "Educatie vertaald naar cartoons.", speaker: "Jonathan van Westendorp", company: "AdamI", sector: "Safety", 
+        summary: "Na elk incident stuurde een maritieme operator met 70+ schepen een lap tekst in drie talen naar de vloot, en de les kwam niet aan. Het beste idee kwam uit hun eigen team: maak er een cartoon van. Met beeldmodellen op maat, in eigen huisstijl en maritiem correct, zijn al 23 incidenten als cartoon met de vloot gedeeld.",
+        takeaways: [
+          "Het beste idee komt van de werkvloer: begin met een brainstorm met de mensen die het probleem dagelijks voelen, niet met de technologie.",
+          "Mensen zijn visueel ingesteld: beeld maakt bestaande communicatie effectiever. Kijk welk document jij morgen kunt laten zien in plaats van laten lezen.",
+          "Context maakt het bruikbaar: huisstijl, realisme en de juiste toon bepalen of mensen de output vertrouwen en echt gebruiken.",
+        ],
+      },
+      { code: "A6", photo: photo("titus"), title: "Gevoelige documenten veilig delen, AVG-proof.", speaker: "Titus Driessen", company: "AdamI", sector: "Privacy", 
+        summary: "Processtukken moeten vaak anoniem naar de tegenpartij of rechtbank, en dat gebeurt nog regel voor regel met de hand. Piranha haalt namen, BSN's en adressen in seconden uit een document door klassieke regels en AI te combineren, met een mens die het laatste woord heeft. Zo kun je daarna ook met gevoelige stukken veilig AI gebruiken.",
+        takeaways: [
+          "Combineer nieuwe en oude technieken: AI vangt 80 tot 90%, klassieke regels pakken de rest. Samen halen ze 99,9%.",
+          "Past tussen elke stap: je systemen blijven hetzelfde, de anonimisering schuift ertussen.",
+          "Direct door met AI: geen tijd meer kwijt aan handmatig weglakken voordat je een AI-tool mag gebruiken.",
+        ],
+      },
+      { code: "A7", photo: photo("mehul"), title: "Nieuwe wetgeving zoals DORA in minuten vertaald naar concrete eisen.", speaker: "Mehul Mistry", company: "Ace", sector: "Finance", 
+        summary: "Bij een Nederlandse bank was het vertalen van wet- en regelgeving zoals DORA naar concrete eisen handwerk, afhankelijk van een paar experts. RegAI Helia haalt de vereisten automatisch uit de wettekst, doet een gap-analyse en toetst controls tegen de regels: 80% efficiënter dan handmatig, met meer dan 90% nauwkeurigheid.",
+        takeaways: [
+          "Regelgeving wordt beheersbaar: complexe wetteksten worden in minuten concrete eisen, zodat je direct ziet wat er voor jouw organisatie verandert.",
+          "Van reactief naar proactief: zie vroeg wat eraan komt en neem de tijd om je beleid op orde te brengen.",
+          "De expert blijft aan het stuur: AI doet het zware leeswerk, het compliance-team neemt de beslissingen en houdt controle en traceerbaarheid.",
+        ],
+      },
+      { code: "A8", photo: photo("pieter"), title: "Human-centric process optimization.", speaker: "Pieter de Lange", company: "AdamI", sector: "Logistiek", 
+        summary: "Drie medewerkers verwerkten elke dag 70 tot 90 orders uit pdf's, Excels en e-mails met de hand, tot 15 minuten per order. De Order-assistent haalt orders uit Outlook, leest ze met OCR en een taalmodel, laat een mens controleren waar nodig en zet ze automatisch in het ERP-systeem. Zo wordt ook de kennis uit de hoofden van medewerkers vastgelegd.",
+        takeaways: [
+          "Mik niet op 100% automatisch: laat een mens meekijken waar het systeem twijfelt.",
+          "Verifieer eerst: meet hoe het proces nu loopt voordat je gaat bouwen.",
+          "Betrek externe leveranciers op tijd: de koppeling met je bestaande systemen hangt vaak van hen af.",
+        ],
+      },
     ],
   },
   {
