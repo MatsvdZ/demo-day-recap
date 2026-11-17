@@ -1103,6 +1103,26 @@ html.modal-open {
 .submit:hover {
   background: var(--color-navy-hover);
 }
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.form-error {
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--color-error);
+}
+
+.honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
 
 .sent {
   padding: 18px 20px;

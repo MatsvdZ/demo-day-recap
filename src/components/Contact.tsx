@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { config } from "../config";
 import { allDemos } from "../data/demos";
 import { Eyebrow } from "./Eyebrow";
 
@@ -10,15 +11,48 @@ type Props = { picked: Set<string> };
 export function Contact({ picked }: Props) {
   const [topic, setTopic] = useState(0);
   const [rating, setRating] = useState(0);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const sent = status === "sent";
 
   const pickedDemos = allDemos.filter((d) => picked.has(d.code));
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: send to a backend / form service. The payload is ready here:
-    // { topic: TOPICS[topic], demos: pickedDemos.map(d => d.code), rating, ...form fields }
-    setSent(true);
+    if (status === "sending") return;
+    const f = new FormData(e.currentTarget);
+    // Honeypot: real visitors never see or fill this field.
+    if (f.get("_honey")) return;
+
+    const name = String(f.get("name") ?? "").trim();
+    const email = String(f.get("email") ?? "").trim();
+    const payload = {
+      _subject: `Demo Day Recap · ${TOPICS[topic]} · ${name}`,
+      _template: "table",
+      _replyto: email,
+      Naam: name,
+      "E-mail": email,
+      Onderwerp: TOPICS[topic],
+      "Gekozen demo's": pickedDemos.length ? pickedDemos.map((d) => `${d.code} · ${d.title} (${d.speaker})`).join("\n") : "Geen",
+      "Beoordeling avond": rating ? `${rating} van 5 sterren` : "Niet gegeven",
+      Bericht: String(f.get("message") ?? "").trim() || "—",
+      "Mening over de avond": String(f.get("feedback") ?? "").trim() || "—",
+    };
+
+    setStatus("sending");
+    try {
+      const res = await fetch(config.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      // FormSubmit answers { success: "true" | "false", message }.
+      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || `HTTP ${res.status}`);
+      setStatus("sent");
+    } catch (err) {
+      console.error("Contact form failed:", err);
+      setStatus("error");
+    }
   };
 
   return (
@@ -129,8 +163,15 @@ export function Contact({ picked }: Props) {
                 <span className="field-label">JOUW MENING OVER DE AVOND (OPTIONEEL)</span>
                 <textarea name="feedback" rows={3} placeholder="Wat vond je ervan? Wat kan er beter?" />
               </label>
-              <button type="submit" className="submit">
-                Verstuur
+              {/* Honeypot for spam bots; hidden from people and assistive tech. */}
+              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="honey" aria-hidden="true" />
+              {status === "error" && (
+                <p className="form-error" role="alert">
+                  Versturen lukte niet. Probeer het zo nog eens, of mail ons direct.
+                </p>
+              )}
+              <button type="submit" className="submit" disabled={status === "sending"} aria-busy={status === "sending"}>
+                {status === "sending" ? "Versturen…" : "Verstuur"}
               </button>
             </div>
           </form>

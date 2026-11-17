@@ -26,7 +26,13 @@ npm run build    # static output in dist/
 - `src/styles/app.css` — page styles, campaign palette (paper `#F2E7D5`, red `#F2464B`)
 - `src/components/` — Hero, Evening (01), DemoList (02), Contact (03), Footer
 
+## Contact form
+
+Submissions are emailed via [FormSubmit](https://formsubmit.co) to the address in `formEndpoint`
+(`src/config.ts`). The very first submission sends a one-time activation email to that address;
+nothing is delivered until it's confirmed. After activating, you can swap the address in
+`formEndpoint` for the random alias FormSubmit gives you, so the address isn't in the page source.
+
 ## Not wired up yet
 
-- The contact form only shows the "Ontvangen" state; it does not send anywhere (see the TODO in `Contact.tsx`).
 - The aftermovie play button and photo tiles are placeholders until real media is added.
