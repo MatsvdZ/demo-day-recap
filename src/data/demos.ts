@@ -85,7 +85,7 @@ export const channels: Channel[] = [
           "Agents die zelf aankopen doen, zijn een kwestie van tijd. Zorg dat je webshop er klaar voor is.",
         ],
       },
-      { code: "B5", photo: photo("euan"), title: "Oplossing die ontwikkelteams helpt.", speaker: "Euan Westenbroek", company: "AdamI", sector: "Publieke sector", 
+      { code: "B5", photo: photo("roel"), title: "AI-native engineering platform.", speaker: "Roel Rotteveel", company: "AdamI", sector: "Publieke sector", 
         summary: "Voor het COA is in vier maanden een AI-native engineering workflow gebouwd. Een AI-agent toetst elke codewijziging aan wet- en regelgeving zoals de AVG, houdt wijzigingen tegen die niet mogen en legt uit hoe het wel kan.",
         takeaways: [
           "Bouw wetgeving standaard in: toets elke wijziging automatisch, niet pas achteraf.",
