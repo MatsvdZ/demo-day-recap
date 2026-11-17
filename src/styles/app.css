@@ -371,17 +371,36 @@ textarea {
   font-weight: 500;
 }
 
+/* Both channels share one grid: a header row plus one row per demo, all demo rows
+   1fr, so every row is as tall as the tallest one and A1 lines up with B1, etc.
+   Each channel is a subgrid spanning those rows. */
 .channels {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto repeat(var(--rows), 1fr);
+  column-gap: 40px;
 }
 
 .channel {
-  flex: 1 1 520px;
+  grid-row: 1 / -1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: subgrid;
+}
+
+@media (max-width: 1099px) {
+  /* Stacked: still one grid (header, demos, header, demos), so the demo rows of
+     both channels share one height. */
+  .channels {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto repeat(var(--rows), 1fr) auto repeat(var(--rows), 1fr);
+  }
+  .channel {
+    grid-row: span calc(var(--rows) + 1);
+  }
+  .channel + .channel .channel__head {
+    padding-top: 56px;
+  }
 }
 
 .channel__head {
@@ -410,7 +429,11 @@ textarea {
 }
 
 .demo {
+  display: flex;
   border-bottom: 1px solid rgba(22, 49, 114, 0.25);
+}
+.demo > .demo__row {
+  flex: 1 1 auto;
 }
 
 .demo__row {
@@ -1221,6 +1244,10 @@ html.modal-open {
     width: 44px;
     height: 44px;
     border-radius: 10px;
+  }
+  /* The whole row opens the pop-up; on phones the arrow only costs title width. */
+  .demo__open {
+    display: none;
   }
   .demo__row {
     gap: 12px;

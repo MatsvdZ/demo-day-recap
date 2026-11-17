@@ -93,7 +93,7 @@ export const channels: Channel[] = [
           "Maak elke engineer AI-native, van pilotteam naar de hele organisatie, via één platform.",
         ],
       },
-      { code: "B6", photo: photo("joost"), title: "Spelregels voor elke AI-agent.", speaker: "Joost Hofmann", company: "Devleaps", sector: "IT", 
+      { code: "B6", photo: photo("joost"), title: "Spelregels voor elke AI-agent.", speaker: "Joost Hofman", company: "Devleaps", sector: "IT", 
         summary: "Iedere developer heeft inmiddels een eigen AI-agent, maar iedereen werkt met eigen regels. Joost liet Tempa zien: één control plane die standaarden, policies en bedrijfscontext naar elke agent stuurt en elk commando vooraf toetst, terwijl het werk gewoon op de laptop blijft.",
         takeaways: [
           "Toets tijdens het schrijven, niet pas bij de release. Begin met de open source Agent Policies en voeg je eigen do's en don'ts toe.",

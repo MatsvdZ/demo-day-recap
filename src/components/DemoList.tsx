@@ -29,7 +29,10 @@ export function DemoList({ picked, onTogglePick }: Props) {
         </p>
       </div>
 
-      <div className="channels">
+      <div
+        className="channels"
+        style={{ "--rows": Math.max(...channels.map((c) => c.demos.length)) } as React.CSSProperties}
+      >
         {channels.map((c) => (
           <div key={c.id} className="channel" style={{ "--code-color": c.codeColor } as React.CSSProperties}>
             <div className="channel__head">
