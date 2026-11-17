@@ -34,10 +34,9 @@ One-time setting: repo Settings → Pages → Build and deployment → Source = 
 
 ## Contact form
 
-Submissions are emailed via [FormSubmit](https://formsubmit.co) to the address in `formEndpoint`
-(`src/config.ts`). The very first submission sends a one-time activation email to that address;
-nothing is delivered until it's confirmed. After activating, you can swap the address in
-`formEndpoint` for the random alias FormSubmit gives you, so the address isn't in the page source.
+Submissions are emailed via [Web3Forms](https://web3forms.com) to the inbox that the access key in
+`src/config.ts` (`form.accessKey`) was created for. The key is meant to be public; it can only send to
+that inbox.
 
 ## Not wired up yet
 

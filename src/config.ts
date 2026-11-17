@@ -9,10 +9,12 @@ export const config = {
   /** Shown while the aftermovie is not live yet. */
   movieDate: "23 november",
   /**
-   * Where the contact form posts (FormSubmit, https://formsubmit.co). Responses are
-   * emailed to the address at the end. The first submission triggers a one-time
-   * activation email to that address; after activating, FormSubmit offers a random
-   * alias you can put here instead so the address isn't visible in the page source.
+   * Contact form delivery via Web3Forms (https://web3forms.com). Responses go to the
+   * inbox the access key was created for. The access key is meant to be public
+   * (it can only send to that inbox), so it is fine in the page source.
    */
-  formEndpoint: "https://formsubmit.co/ajax/mats.vanderzwan@adami.ai",
+  form: {
+    endpoint: "https://api.web3forms.com/submit",
+    accessKey: "2887f06e-ade7-424f-9cf7-3e71588307e8",
+  },
 };

@@ -37,10 +37,10 @@ function explain(err: unknown, serviceMessage?: string): SendError {
     };
   }
   const msg = serviceMessage ?? (err instanceof Error ? err.message : String(err));
-  if (/activat/i.test(msg)) {
+  if (/access.?key|not configured/i.test(msg)) {
     return {
-      title: "Het formulier is nog niet geactiveerd.",
-      detail: "De ontvanger moet het formulier eerst eenmalig bevestigen via de activatiemail van FormSubmit. Je bericht is niet verstuurd; probeer het later opnieuw.",
+      title: "Het formulier is niet goed ingesteld.",
+      detail: `De verzenddienst herkent de toegangssleutel niet (${msg.replace(/[.\s]+$/, "")}). Je bericht is niet verstuurd; probeer het later opnieuw.`,
     };
   }
   return {
@@ -74,14 +74,18 @@ export function Contact({ picked }: Props) {
     if (status === "sending") return;
     const f = new FormData(e.currentTarget);
     // Honeypot: real visitors never see or fill this field.
-    if (f.get("_honey")) return;
+    if (f.get("botcheck")) return;
 
     const name = String(f.get("name") ?? "").trim();
     const email = String(f.get("email") ?? "").trim();
+    // Web3Forms: access_key/subject/from_name/replyto/botcheck are its own fields;
+    // everything else is listed in the email as-is.
     const payload = {
-      _subject: `Demo Day Recap · ${TOPICS[topic]} · ${name}`,
-      _template: "table",
-      _replyto: email,
+      access_key: config.form.accessKey,
+      subject: `Demo Day Recap · ${TOPICS[topic]} · ${name}`,
+      from_name: "Demo Day Recap",
+      replyto: email,
+      botcheck: "",
       Naam: name,
       "E-mail": email,
       Onderwerp: TOPICS[topic],
@@ -96,14 +100,14 @@ export function Contact({ picked }: Props) {
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(config.formEndpoint, {
+      const res = await fetch(config.form.endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
         signal: controller.signal,
       });
       const data: { success?: unknown; message?: string } = await res.json().catch(() => ({}));
-      // FormSubmit answers { success: "true" | "false", message }.
+      // Web3Forms answers { success: true | false, message }.
       if (!res.ok || String(data.success) !== "true") {
         const reason = data.message || `HTTP ${res.status} ${res.statusText}`.trim();
         console.error("Contact form rejected:", reason);
@@ -230,7 +234,7 @@ export function Contact({ picked }: Props) {
                 <textarea name="feedback" rows={3} placeholder="Wat vond je ervan? Wat kan er beter?" />
               </label>
               {/* Honeypot for spam bots; hidden from people and assistive tech. */}
-              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="honey" aria-hidden="true" />
+              <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" className="honey" aria-hidden="true" />
               {status === "error" && error && (
                 <div className="form-error" role="alert">
                   <strong>{error.title}</strong> {error.detail}
