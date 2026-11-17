@@ -40,7 +40,7 @@ export const channels: Channel[] = [
           "Zet alles op één platform: zonder één fundament wordt elk nieuw idee technical debt. Breng in kaart welke AI-toepassingen er nu al draaien.",
         ],
       },
-      { code: "A2", photo: photo("jochem"), title: "AI Aggregatie: alles wat je wilt weten, in één overzicht.", speaker: "Jochem Bouman", company: "AdamI", sector: "Bouw", 
+      { code: "A2", photo: photo("jochem"), title: "Van acht apps naar één brein.", speaker: "Jochem Bouman", company: "AdamI", sector: "Bouw", 
         summary: "WIJK bouwt binnen een jaar complete woonwijken, maar met welke van de 342 gemeenten begin je? Een AI-agent leest per gemeente alle openbare stukken, stelt elke gemeente dezelfde vragen met bron erbij en maakt er één ranking van. Samen met een CRM en pipeline op maat vormt dat WIJK OS, het systeem waarin het hele bedrijf werkt.",
         takeaways: [
           "Structuur is goud waard: de eerste stap van een succesvol AI-project is zoeken naar structuur in je vraag en je data.",
@@ -64,7 +64,7 @@ export const channels: Channel[] = [
           "Agentic Design versnelt co-creatie: met AI kan iedereen meedoen in het ideatie- en ontwerpproces.",
         ],
       },
-      { code: "A5", photo: photo("jonathan"), title: "Educatie vertaald naar cartoons.", speaker: "Jonathan van Westendorp", company: "AdamI", sector: "Safety", 
+      { code: "A5", photo: photo("jonathan"), title: "Van incident naar cartoon.", speaker: "Jonathan van Westendorp", company: "AdamI", sector: "Safety", 
         summary: "Na elk incident stuurde een maritieme operator met 70+ schepen een lap tekst in drie talen naar de vloot, en de les kwam niet aan. Het beste idee kwam uit hun eigen team: maak er een cartoon van. Met beeldmodellen op maat, in eigen huisstijl en maritiem correct, zijn al 23 incidenten als cartoon met de vloot gedeeld.",
         takeaways: [
           "Het beste idee komt van de werkvloer: begin met een brainstorm met de mensen die het probleem dagelijks voelen, niet met de technologie.",
@@ -88,7 +88,7 @@ export const channels: Channel[] = [
           "De expert blijft aan het stuur: AI doet het zware leeswerk, het compliance-team neemt de beslissingen en houdt controle en traceerbaarheid.",
         ],
       },
-      { code: "A8", photo: photo("pieter"), title: "Human-centric process optimization.", speaker: "Pieter de Lange", company: "AdamI", sector: "Logistiek", 
+      { code: "A8", photo: photo("pieter"), title: "Orderverwerking: copy-paste of copy-passé?", speaker: "Pieter de Lange", company: "AdamI", sector: "Logistiek", 
         summary: "Drie medewerkers verwerkten elke dag 70 tot 90 orders uit pdf's, Excels en e-mails met de hand, tot 15 minuten per order. De Order-assistent haalt orders uit Outlook, leest ze met OCR en een taalmodel, laat een mens controleren waar nodig en zet ze automatisch in het ERP-systeem. Zo wordt ook de kennis uit de hoofden van medewerkers vastgelegd.",
         takeaways: [
           "Mik niet op 100% automatisch: laat een mens meekijken waar het systeem twijfelt.",
