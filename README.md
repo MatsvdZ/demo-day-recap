@@ -11,6 +11,12 @@ npm run dev      # http://localhost:5173
 npm run build    # static output in dist/
 ```
 
+## Publishing
+
+Every push to `main` builds the site and publishes it to GitHub Pages
+(`.github/workflows/deploy.yml`): https://matsvanderzwan.github.io/demo-day-recap/
+One-time setting: repo Settings → Pages → Build and deployment → Source = **GitHub Actions**.
+
 ## Filling in content
 
 - **Demos, summaries and takeaways:** `src/data/demos.ts`, filled from the Podium A and B decks. Empty `summary` / `takeaways` show a placeholder.
