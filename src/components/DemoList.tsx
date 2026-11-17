@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { channels, type Channel, type Demo } from "../data/demos";
+import { DemoModal } from "./DemoModal";
 import { Eyebrow } from "./Eyebrow";
 
 type Props = {
@@ -10,8 +11,10 @@ type Props = {
 const PLUS = "M12 5v14M5 12h14";
 const CHECK = "M5 12.5l4.5 4.5L19 7.5";
 
+type Active = { demo: Demo; channel: Channel; origin: HTMLElement };
+
 export function DemoList({ picked, onTogglePick }: Props) {
-  const [open, setOpen] = useState<string | null>(null);
+  const [active, setActive] = useState<Active | null>(null);
 
   return (
     <section className="container demos" aria-labelledby="demos-title">
@@ -28,68 +31,59 @@ export function DemoList({ picked, onTogglePick }: Props) {
 
       <div className="channels">
         {channels.map((c) => (
-          <ChannelColumn
-            key={c.id}
-            channel={c}
-            open={open}
-            onToggleOpen={(code) => setOpen((o) => (o === code ? null : code))}
-            picked={picked}
-            onTogglePick={onTogglePick}
-          />
+          <div key={c.id} className="channel" style={{ "--code-color": c.codeColor } as React.CSSProperties}>
+            <div className="channel__head">
+              <span className="channel__name">{c.name}</span>
+              <span className="channel__sub">{c.sub}</span>
+            </div>
+            {c.demos.map((d) => (
+              <DemoRow
+                key={d.code}
+                demo={d}
+                isActive={active?.demo.code === d.code}
+                isPicked={picked.has(d.code)}
+                onOpen={(origin) => setActive({ demo: d, channel: c, origin })}
+                onTogglePick={() => onTogglePick(d.code)}
+              />
+            ))}
+          </div>
         ))}
       </div>
-    </section>
-  );
-}
 
-type ColumnProps = Props & {
-  channel: Channel;
-  open: string | null;
-  onToggleOpen: (code: string) => void;
-};
-
-function ChannelColumn({ channel, open, onToggleOpen, picked, onTogglePick }: ColumnProps) {
-  return (
-    <div className="channel" style={{ "--code-color": channel.codeColor } as React.CSSProperties}>
-      <div className="channel__head">
-        <span className="channel__name">{channel.name}</span>
-        <span className="channel__sub">{channel.sub}</span>
-      </div>
-      {channel.demos.map((d) => (
-        <DemoRow
-          key={d.code}
-          demo={d}
-          isOpen={open === d.code}
-          isPicked={picked.has(d.code)}
-          onToggleOpen={() => onToggleOpen(d.code)}
-          onTogglePick={() => onTogglePick(d.code)}
+      {active && (
+        <DemoModal
+          key={active.demo.code}
+          demo={active.demo}
+          channel={active.channel}
+          origin={active.origin}
+          isPicked={picked.has(active.demo.code)}
+          onTogglePick={() => onTogglePick(active.demo.code)}
+          onClosed={() => setActive(null)}
         />
-      ))}
-    </div>
+      )}
+    </section>
   );
 }
 
 type RowProps = {
   demo: Demo;
-  isOpen: boolean;
+  isActive: boolean;
   isPicked: boolean;
-  onToggleOpen: () => void;
+  onOpen: (origin: HTMLElement) => void;
   onTogglePick: () => void;
 };
 
-function DemoRow({ demo: d, isOpen, isPicked, onToggleOpen, onTogglePick }: RowProps) {
-  const panelId = `demo-${d.code}-details`;
+function DemoRow({ demo: d, isActive, isPicked, onOpen, onTogglePick }: RowProps) {
   return (
-    <div className="demo">
+    <div className={`demo${isActive ? " is-active" : ""}`}>
       <div className="demo__row">
         <span className="demo__code">{d.code}</span>
         <button
           type="button"
           className="demo__toggle"
-          onClick={onToggleOpen}
-          aria-expanded={isOpen}
-          aria-controls={panelId}
-          aria-label={`${isOpen ? "Verberg" : "Toon"} samenvatting van ${d.code}`}
+          onClick={(e) => onOpen(e.currentTarget.closest(".demo__row") as HTMLElement)}
+          aria-haspopup="dialog"
+          aria-label={`Open recap van ${d.code}: ${d.title}`}
         >
           <span className="demo__text">
             <span className="demo__title">{d.title}</span>
@@ -98,7 +92,7 @@ function DemoRow({ demo: d, isOpen, isPicked, onToggleOpen, onTogglePick }: RowP
             </span>
           </span>
           <svg
-            className={`demo__chevron${isOpen ? " is-open" : ""}`}
+            className="demo__open"
             width="20"
             height="20"
             viewBox="0 0 24 24"
@@ -109,7 +103,7 @@ function DemoRow({ demo: d, isOpen, isPicked, onToggleOpen, onTogglePick }: RowP
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            <path d="M6 9l6 6 6-6" />
+            <path d="M7 17L17 7M9 7h8v8" />
           </svg>
         </button>
         <button
@@ -134,23 +128,6 @@ function DemoRow({ demo: d, isOpen, isPicked, onToggleOpen, onTogglePick }: RowP
           </svg>
         </button>
       </div>
-
-      {isOpen && (
-        <div id={panelId} className="demo__details">
-          <p className="demo__summary">
-            {d.summary || `[Korte samenvatting van ${d.code} in één of twee zinnen]`}
-          </p>
-          <div className="takeaways">
-            <span className="takeaways__label">3 TAKEAWAYS</span>
-            {d.takeaways.map((t, i) => (
-              <div key={i} className="takeaway">
-                <span className="takeaway__n">0{i + 1}</span>
-                <span className="takeaway__text">{t || `[Takeaway ${i + 1}]`}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

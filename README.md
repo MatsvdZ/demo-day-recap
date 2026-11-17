@@ -14,6 +14,10 @@ npm run build    # static output in dist/
 ## Filling in content
 
 - **Demos, summaries and takeaways:** `src/data/demos.ts`. Empty `summary` / `takeaways` show a placeholder.
+  Clicking a demo opens an animated pop-up (`src/components/DemoModal.tsx`) with these.
+- **Speaker photos:** add a square image as `src/assets/speakers/<slug>.webp` and set `photo: photo("<slug>")`
+  on the demo. Without a photo the pop-up shows the speaker's initials. Still missing: Gijs Roodenburg (A4),
+  Mehul Mistry (A7), Jeffrey de Graaf (B1), Matthijs Vossen (B2), Tim Twisk (B3), Joost Hofmann (B6).
 - **Photos and aftermovie switches:** `src/config.ts` (`photosLive`, `movieLive`, `movieDate`).
 - **Photographer credit:** `src/components/Evening.tsx` (`[fotograaf]`).
 
