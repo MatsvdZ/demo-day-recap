@@ -106,10 +106,12 @@ textarea {
     var(--red);
 }
 
-.wave {
-  width: 100%;
-  height: auto;
+.waves {
   display: block;
+  width: 100%;
+  height: clamp(170px, 27vw, 400px);
+  /* Overlap the navy section by 1px so no hairline shows between them. */
+  margin-bottom: -1px;
 }
 
 .brand__mono {
@@ -124,7 +126,6 @@ textarea {
 
 .hero {
   position: relative;
-  overflow: hidden;
 }
 
 .hero__top {
@@ -221,7 +222,7 @@ textarea {
   font-size: 14px;
   letter-spacing: 0.14em;
 }
-.hero .wave {
+.hero__waves {
   margin-top: 8px;
 }
 
@@ -230,7 +231,6 @@ textarea {
 .evening {
   background: var(--color-navy);
   color: #ffffff;
-  margin-top: -2px;
 }
 
 .evening__inner {
@@ -745,7 +745,6 @@ textarea {
 .footer {
   background: var(--color-navy);
   color: #ffffff;
-  margin-top: -2px;
 }
 
 .footer__inner {

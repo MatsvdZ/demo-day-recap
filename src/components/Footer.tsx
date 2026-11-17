@@ -1,9 +1,9 @@
-import wave from "../assets/wave.jpg";
+import { Waves } from "./Waves";
 
 export function Footer() {
   return (
     <>
-      <img className="wave" src={wave} alt="" aria-hidden="true" />
+      <Waves flip />
       <footer className="footer">
         <div className="container footer__inner">
           <span className="footer__brand">

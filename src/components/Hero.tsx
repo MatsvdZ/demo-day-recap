@@ -1,5 +1,5 @@
 import headphones from "../assets/headphones.jpg";
-import wave from "../assets/wave.jpg";
+import { Waves } from "./Waves";
 
 export function Hero() {
   return (
@@ -33,7 +33,7 @@ export function Hero() {
       <div className="container hero__stats">
         <span>16 DEMO'S · 2 KANALEN · 1 AVOND</span>
       </div>
-      <img className="wave" src={wave} alt="" aria-hidden="true" />
+      <Waves className="hero__waves" />
     </header>
   );
 }
