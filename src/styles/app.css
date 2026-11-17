@@ -414,10 +414,20 @@ textarea {
 }
 
 .demo__row {
+  /* The whole row is the click target: .demo__toggle's ::after stretches over it.
+     Negative side margins give the hover highlight room without shifting the content. */
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 0;
+  margin: 0 -12px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-brand);
+}
+.demo__row:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .demo__code {
@@ -426,6 +436,21 @@ textarea {
   font-size: 26px;
   font-weight: 900;
   color: var(--code-color);
+}
+
+.demo__toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.demo__toggle:focus-visible {
+  outline: none;
+}
+.demo__toggle:focus-visible::after {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 2px;
+  border-radius: 14px;
 }
 
 .demo__toggle {
@@ -472,7 +497,7 @@ textarea {
   mix-blend-mode: multiply;
   pointer-events: none;
 }
-.demo__toggle:hover .demo__avatar,
+.demo__row:hover .demo__avatar,
 .demo__toggle:focus-visible .demo__avatar {
   transform: rotate(0deg) scale(1.06);
 }
@@ -501,11 +526,11 @@ textarea {
   flex-shrink: 0;
   transition: transform var(--dur-fast) var(--ease-brand);
 }
-.demo__toggle:hover .demo__open,
+.demo__row:hover .demo__open,
 .demo__toggle:focus-visible .demo__open {
   transform: translate(2px, -2px);
 }
-.demo__toggle:hover .demo__title {
+.demo__row:hover .demo__title {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
@@ -516,6 +541,9 @@ textarea {
 }
 
 .pick {
+  /* Sits above the stretched row button, so it stays its own target. */
+  position: relative;
+  z-index: 1;
   width: 44px;
   height: 44px;
   flex-shrink: 0;
