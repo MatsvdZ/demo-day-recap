@@ -1,0 +1,240 @@
+/* AdamI Design System — generated from tokens.json */
+:root, [data-theme="default"] {
+  --color-navy: #163172; /* Primary brand navy — headings and body text on light grounds, nav active state; alias source for `surface-dark` and `text`. */
+  --color-ink: #081525; /* Darkest ground — footer and the deepest dark sections; alias source for `surface-darkest`. */
+  --color-cobalt: #1e56a0; /* Links and the focus ring; alias source for `link`. */
+  --color-sky: #d6e4f0; /* Tinted section backgrounds and the Button `secondary` pressed fill; alias source for `surface-tint`. */
+  --color-sky-soft: #eef4fa; /* Soft tinted background — Button `secondary` and `inverted` hover fill, nav-link hover background; alias source for `surface-soft`. */
+  --color-ember: #c76607; /* The single warm accent hue, used sparingly (never as a large fill); alias source for `cta` and the Services-card icon color. */
+  --color-ember-cta: #a6560a; /* Deepened Ember (~5.3:1 with white text). No shipped component uses it since the Figma web components made Button `primary` navy; kept for a solid warm fill if one is needed. Alias source for `cta-solid`. */
+  --color-white: #ffffff; /* Pure white — Button `primary`/`ghost` text on dark grounds, SwitchButton, TextField, Select and Checkbox backgrounds; alias source for `surface`. */
+  --color-bg: #fafcfd; /* Page background — deliberately off-white, not pure white; alias source for `bg`. */
+  --color-border: #dbe4ef; /* 1px hairline borders on cards, inputs and section dividers; alias source for `border`. */
+  --color-text-muted: #4d6198; /* Secondary/muted body text on light surfaces — TextField and Select hint, Services/Proof copy, inactive nav links; alias source for `text-muted`. */
+  --color-success: #1e7145; /* Success state, kept apart from the Ember accent — e.g. the contact form's "Request received" eyebrow. */
+  --color-error: #b3261e; /* Error state — TextField/Select error border and message; never Ember. */
+  --color-neutral200: #c9d3e3; /* Disabled fill and border of the Button `ghost`/`inverted`/`link` variants (primary and secondary use `color-navy-soft` and `color-disabled`). */
+  --color-neutral400: #8c9ab8; /* Input placeholder text color (TextField placeholders — chosen, not specified in Figma). The unchecked Checkbox border is now navy. */
+  --color-neutral600: #566587; /* Disabled text color of the Button `ghost`/`inverted`/`link` variants. */
+  --color-navy-hover: #1a4389; /* Hover fill of the Button `primary`: halfway between `color-navy` and `color-cobalt` (the pressed fill). Not in Figma; added on request. */
+  --color-navy-soft: #88a0c6; /* Disabled fill of the Button `primary` (white text on it). Literal from the Figma web components. */
+  --color-disabled: #9c9c9c; /* Disabled border and text of the Button `secondary`. Literal from the Figma web components. */
+  --color-neutral800: #24314a; /* Darkest step of the neutral ramp — reserved; no shipped component references it yet. */
+  --color-code-bg: #0f2050; /* Code-sample background in documentation contexts. */
+  --color-code-text: #dce8fb; /* Code-sample text color on `color-code-bg`. */
+  --bg: var(--color-bg); /* Applied to `body { background }` in bundle.css. */
+  --surface: var(--color-white); /* Card and input backgrounds — TextField, Select, Checkbox, Tag. */
+  --surface-soft: var(--color-sky-soft); /* Hover fill for Button `inverted` and nav links; tinted section background. */
+  --surface-tint: var(--color-sky); /* Proof section tint. */
+  --surface-dark: var(--color-navy); /* Navy sections — Hero background, SiteNav; the dark-ground Button demo. */
+  --surface-darkest: var(--color-ink); /* Ink sections — SiteFooter background. */
+  --text: var(--color-navy); /* Default text color on light surfaces (body copy, headings). */
+  --text-muted: var(--color-text-muted); /* Secondary text — see `color-text-muted`. */
+  --text-on-dark: var(--color-white); /* Text color on navy/ink grounds — the Hero heading. */
+  --link: var(--color-cobalt); /* Link color and the Button `link` variant text. */
+  --focus-outline: var(--color-cobalt); /* Keyboard focus outline (`:focus-visible`) on links, buttons, cards and other interactive elements on light grounds (bg, surface, surface-soft, surface-tint). 2px solid, 2px offset. Website: Global Styles embed. */
+  --focus-outline-on-dark: var(--color-sky); /* Keyboard focus outline on dark grounds (surface-dark, surface-darkest: footer, navy/ink sections). Cobalt is not visible there. */
+  --cta: var(--color-ember); /* Reference to the accent hue itself (e.g. the Services-card icon color) — not a fill. */
+  --cta-solid: var(--color-ember-cta); /* Reference to `color-ember-cta`; currently unused by shipped components (Button `primary` is navy). */
+  --cta-solid-hover: #8a4708; /* Darker step of `cta-solid`; currently unused by shipped components. */
+  --border: var(--color-border); /* Card, input and divider borders. */
+  --success: var(--color-success); /* Success state — see `color-success`. */
+  --error: var(--color-error); /* Error state — see `color-error`. */
+  --color-glass-white-55: rgba(255,255,255,.55); /* Glass primitive (Figma: primitives/color/glassWhite55). */
+  --color-glass-white-75: rgba(255,255,255,.75); /* Glass primitive (Figma: primitives/color/glassWhite75). */
+  --color-glass-white-85: rgba(255,255,255,.85); /* Glass primitive (Figma: primitives/color/glassWhite85). */
+  --color-glass-white-90: rgba(255,255,255,.90); /* Glass primitive (Figma: primitives/color/glassWhite90). */
+  --glass-fill: var(--color-glass-white-55); /* Glass surface fill — Case card, SiteNav, contact panel, Case item default, secondary Button. Figma: semantic/color/glassFill. */
+  --glass-fill-hover: var(--color-glass-white-75); /* Case item hover. Figma: semantic/color/glassFillHover. */
+  --glass-fill-active: var(--color-glass-white-85); /* Case item active. Figma: semantic/color/glassFillActive. */
+  --glass-border: var(--color-glass-white-90); /* Glass border (1.5px) — decorative only; interactive elements keep a navy outline. Figma: semantic/color/glassBorder. */
+  --focus-ring: 0 0 0 3px rgba(30,86,160,.16); /* Focus ring on TextField/Select — 3px cobalt at 16% opacity. */
+  --shadow-sm: 0 1px 2px rgba(8,21,37,.08), 0 1px 1px rgba(8,21,37,.06); /* Card hover elevation — the lightest level. */
+  --shadow-md: 0 6px 16px rgba(8,21,37,.14), 0 2px 5px rgba(8,21,37,.08); /* Dropdowns and popovers. */
+  --shadow-lg: 0 20px 44px rgba(8,21,37,.20), 0 6px 14px rgba(8,21,37,.12); /* Modals — the heaviest level, used sparingly. */
+  --glass-shadow: 0 20px 50px rgba(22,49,111,.07); /* The one shadow under a glass surface (Figma effect style semantic/glass/surface); omitted by `surface-flat`. */
+}
+:root {
+  --space-1: 4px; /* Finest spacing increment; rarely used directly. */
+  --space-2: 8px; /* Tag/Eyebrow internal gaps, Checkbox label gap. */
+  --space-3: 12px; /* Small vertical gaps (Metric, form field notes). */
+  --space-4: 16px; /* CaseCard image-to-title margin; page margin at mobile width. */
+  --space-5: 24px; /* Standard card padding and the grid gutter at every breakpoint. */
+  --space-6: 32px; /* Larger card padding (contact-form card), heading-to-grid margin, page margin at tablet width. */
+  --space-7: 48px; /* Gaps between hero elements, footer column gaps, page margin at desktop width. */
+  --space-8: 64px; /* Footer vertical padding. */
+  --space-9: 96px; /* Section vertical padding — the rhythm between page sections. */
+  --grid-max: 1280px; /* Max content width for every page section. */
+  --grid-gutter: 24px; /* Grid gutter at every breakpoint — equal to space-5. */
+  --grid-margin-desktop: 48px; /* Page margin at ≥1024px. */
+  --grid-margin-tablet: 32px; /* Page margin at ≥640px, below 1024px. */
+  --grid-margin-mobile: 16px; /* Page margin below 640px. */
+  --bp-tablet: 640px; /* Tablet breakpoint — the 8-column grid starts here. */
+  --bp-desktop: 1024px; /* Desktop breakpoint — the 12-column grid starts here. */
+  --radius-sm: 4px; /* Small controls — the Checkbox box. */
+  --radius-md: 8px; /* Boxed and label-inside TextField and Select, footer newsletter field. */
+  --radius-lg: 16px; /* Compact CaseCard, boxed Metric, CaseItem, contact-form card, dark demo blocks. */
+  --radius-pill: 999px; /* Pills — Button, SwitchButton, CaseCard tags. */
+  --ease-brand: cubic-bezier(0.525, 0, 0, 1); /* The one brand easing curve for every transition. */
+  --dur-fast: 0.2s; /* Hover and small state changes — Button, TextField/Select focus, Checkbox. */
+  --dur-normal: 0.45s; /* Panels and larger transitions; no shipped component uses it yet. */
+  --weight-regular: 400; /* body, body-lg, body-sm, caption, body-mono. */
+  --weight-medium: 500; /* label (IBM Plex Mono). */
+  --weight-semibold: 600; /* h3, h4, stat-sm. */
+  --weight-bold: 700; /* display, h1, h2, stat, body-strong, label-strong. */
+  --grid-cols-desktop: 12; /* Column count at ≥1024px. */
+  --grid-cols-tablet: 8; /* Column count at ≥640px, below 1024px. */
+  --grid-cols-mobile: 4; /* Column count below 640px. */
+  --font-size-12: 12px; /* Type primitive (Figma: primitives/fontSizes/size-12). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-14: 14px; /* Type primitive (Figma: primitives/fontSizes/size-14). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-16: 16px; /* Type primitive (Figma: primitives/fontSizes/size-16). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-18: 18px; /* Type primitive (Figma: primitives/fontSizes/size-18). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-20: 20px; /* Type primitive (Figma: primitives/fontSizes/size-20). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-22: 22px; /* Type primitive (Figma: primitives/fontSizes/size-22). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-24: 24px; /* Type primitive (Figma: primitives/fontSizes/size-24). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-30: 30px; /* Type primitive (Figma: primitives/fontSizes/size-30). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-36: 36px; /* Type primitive (Figma: primitives/fontSizes/size-36). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-44: 44px; /* Type primitive (Figma: primitives/fontSizes/size-44). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-56: 56px; /* Type primitive (Figma: primitives/fontSizes/size-56). Referenced by the semantic --text-{role}-size variables. */
+  --font-size-80: 80px; /* Type primitive (Figma: primitives/fontSizes/size-80). Referenced by the semantic --text-{role}-size variables. */
+  --line-height-16: 16px; /* Type primitive (Figma: primitives/lineHeights/leading-16). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-18: 18px; /* Type primitive (Figma: primitives/lineHeights/leading-18). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-22: 22px; /* Type primitive (Figma: primitives/lineHeights/leading-22). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-24: 24px; /* Type primitive (Figma: primitives/lineHeights/leading-24). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-26: 26px; /* Type primitive (Figma: primitives/lineHeights/leading-26). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-28: 28px; /* Type primitive (Figma: primitives/lineHeights/leading-28). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-30: 30px; /* Type primitive (Figma: primitives/lineHeights/leading-30). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-32: 32px; /* Type primitive (Figma: primitives/lineHeights/leading-32). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-38: 38px; /* Type primitive (Figma: primitives/lineHeights/leading-38). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-44: 44px; /* Type primitive (Figma: primitives/lineHeights/leading-44). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-52: 52px; /* Type primitive (Figma: primitives/lineHeights/leading-52). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-64: 64px; /* Type primitive (Figma: primitives/lineHeights/leading-64). Referenced by the semantic --text-{role}-line variables. */
+  --line-height-88: 88px; /* Type primitive (Figma: primitives/lineHeights/leading-88). Referenced by the semantic --text-{role}-line variables. */
+  --blur-30: 30px; /* Blur primitive (Figma: primitives/blur/blur-30). */
+  --border-width-glass: 1.5px; /* Glass border primitive (Figma: primitives/borderWidth/glass). */
+  --focus-outline-width: 2px; /* Width of the keyboard focus outline (`focus-outline`, `focus-outline-on-dark`). */
+  --focus-outline-offset: 2px; /* Gap between an element and its keyboard focus outline; 4px is allowed for inline text links in dense lists such as the footer. */
+  --font-head: "Montserrat",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --font-body: "Montserrat",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --font-mono: "IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --text-display: 700 80px/88px var(--font-head); /* Hero headline only. Tracking −1%. Mobile: 44/52. */
+  --text-h1: 700 56px/64px var(--font-head); /* Page title. Tracking −1%. Mobile: 36/44. */
+  --text-h2: 700 44px/52px var(--font-head); /* Large feature or case headline. Tracking −0.5%. Mobile: 30/38. */
+  --text-h3: 600 30px/38px var(--font-head); /* Section heading (What we do, Selected work, Contact). Mobile: 22/30. */
+  --text-h4: 600 20px/28px var(--font-head); /* Card and sub-section title; footer column heads; case-list client name. Mobile: 18/26. */
+  --text-body-lg: 400 20px/30px var(--font-body); /* Lead copy and the large Metric label. Mobile: 18/28. */
+  --text-body: 400 16px/26px var(--font-body); /* Default running text — buttons (md), form text, nav, footer links. */
+  --text-body-strong: 700 16px/26px var(--font-body); /* Bold running text and inline emphasis. */
+  --text-body-sm: 400 14px/22px var(--font-body); /* Secondary copy, Service-card descriptions, Metric boxed label, link buttons. */
+  --text-stat: 700 56px/64px var(--font-head); /* Key figures (Metric plain) — set with tabular numerals. Tracking −1%. Mobile: 36/44. */
+  --text-stat-sm: 600 24px/32px var(--font-head); /* Boxed key figures (Metric boxed, CaseCard). */
+  --text-label: 500 12px/16px var(--font-mono); /* Eyebrow, tag, small button, form field labels. IBM Plex Mono 500, uppercase, +12% tracking. */
+  --text-label-strong: 700 12px/16px var(--font-mono); /* Emphasised label. IBM Plex Mono 700, uppercase, +12% tracking. */
+  --text-caption: 400 12px/18px var(--font-mono); /* Hints, error notes, footer meta, image captions. IBM Plex Mono 400, uppercase, +4% tracking. */
+  --text-body-mono: 400 16px/24px var(--font-mono); /* Mono running text — case numbers, consent copy. IBM Plex Mono 400, sentence case. */
+}
+.display {
+  font-family: var(--font-head);
+  font-size: 80px;
+  line-height: 88px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.h1 {
+  font-family: var(--font-head);
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.h2 {
+  font-family: var(--font-head);
+  font-size: 44px;
+  line-height: 52px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+.h3 {
+  font-family: var(--font-head);
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.h4 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.body-lg {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.body-strong {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.body-sm {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.stat {
+  font-family: var(--font-head);
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.stat-sm {
+  font-family: var(--font-head);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+.label-strong {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.caption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.body-mono {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
