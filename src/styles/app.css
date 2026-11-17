@@ -442,6 +442,41 @@ textarea {
   cursor: pointer;
 }
 
+/* Small speaker portrait in each row; same black-and-white, halftone treatment as the pop-up. */
+.demo__avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 2px solid var(--color-navy);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--code-color);
+  overflow: hidden;
+  transform: rotate(-3deg);
+  transition: transform var(--dur-fast) var(--ease-brand);
+}
+.demo__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
+  mix-blend-mode: multiply;
+}
+.demo__avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(22, 49, 114, 0.22) 0.8px, transparent 1.2px) 0 0 / 3px 3px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.demo__toggle:hover .demo__avatar,
+.demo__toggle:focus-visible .demo__avatar {
+  transform: rotate(0deg) scale(1.06);
+}
+
 .demo__text {
   flex: 1 1 auto;
   min-width: 0;
@@ -1133,6 +1168,18 @@ html.modal-open {
     font-size: 38px;
     line-height: 44px;
     text-shadow: 3px 3px 0 var(--red);
+  }
+  .demo__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+  .demo__row {
+    gap: 12px;
+  }
+  .demo__code {
+    width: 36px;
+    font-size: 22px;
   }
   .channel__name {
     font-size: 34px;

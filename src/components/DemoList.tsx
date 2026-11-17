@@ -85,6 +85,11 @@ function DemoRow({ demo: d, isActive, isPicked, onOpen, onTogglePick }: RowProps
           aria-haspopup="dialog"
           aria-label={`Open recap van ${d.code}: ${d.title}`}
         >
+          {d.photo && (
+            <span className="demo__avatar" aria-hidden="true">
+              <img src={d.photo} alt="" loading="lazy" />
+            </span>
+          )}
           <span className="demo__text">
             <span className="demo__title">{d.title}</span>
             <span className="demo__who">
