@@ -1,13 +1,12 @@
 import headphones from "../assets/headphones.jpg";
+import { Logos } from "./Logos";
 import { Waves } from "./Waves";
 
 export function Hero() {
   return (
     <header className="hero">
       <div className="container hero__top">
-        <span className="brand">
-          AdamI <span className="accent">×</span> <span className="brand__mono accent">DEVLEAPS</span>
-        </span>
+        <Logos className="hero__logos" />
         <span className="badge">DEMO DAY RECAP</span>
       </div>
 

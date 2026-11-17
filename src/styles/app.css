@@ -114,12 +114,40 @@ textarea {
   margin-bottom: -1px;
 }
 
-.brand__mono {
-  font-family: var(--mono);
-  letter-spacing: 0.18em;
+/* AdamI × DevLeaps lockup. Sizes follow the "golven" cover (AdamI 150px, DevLeaps 195px). */
+.logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  line-height: 1;
 }
-.accent {
-  color: var(--red-deep);
+.logos img {
+  display: block;
+  height: auto;
+}
+.logos__adami {
+  width: 150px;
+}
+.logos__devleaps {
+  width: 195px;
+}
+.logos__x {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--red);
+}
+.logos--on-dark .logos__adami {
+  /* The AdamI mark is navy on transparent; make it white on navy grounds. */
+  filter: brightness(0) invert(1);
+}
+.footer__logos .logos__adami {
+  width: 120px;
+}
+.footer__logos .logos__devleaps {
+  width: 156px;
+}
+.footer__logos {
+  gap: 12px;
 }
 
 /* ---------- Hero ---------- */
@@ -135,11 +163,6 @@ textarea {
   gap: 16px;
   justify-content: space-between;
   align-items: center;
-}
-
-.brand {
-  font-weight: 700;
-  font-size: 22px;
 }
 
 .badge {
@@ -757,11 +780,6 @@ textarea {
   align-items: center;
 }
 
-.footer__brand {
-  font-weight: 700;
-  font-size: 20px;
-}
-
 .footer__partners {
   font-family: var(--mono);
   font-size: 12px;
@@ -787,6 +805,15 @@ textarea {
 @media (max-width: 639px) {
   :root {
     --pad-x: 16px;
+  }
+  .hero__logos .logos__adami {
+    width: 110px;
+  }
+  .hero__logos .logos__devleaps {
+    width: 143px;
+  }
+  .hero__logos {
+    gap: 10px;
   }
   .hero__title {
     font-size: 88px;
