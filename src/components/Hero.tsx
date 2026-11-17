@@ -1,4 +1,4 @@
-import headphones from "../assets/headphones.jpg";
+import headphones from "../assets/headphones.webp";
 import { Logos } from "./Logos";
 import { Waves } from "./Waves";
 
