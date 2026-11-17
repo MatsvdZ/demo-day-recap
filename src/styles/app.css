@@ -1233,19 +1233,26 @@ html.modal-open {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px 36px;
+  gap: 12px;
+}
+
+.partners li {
+  /* Full-colour marks need a light ground: Amiio's text and Ace's gradient fade into navy. */
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+.partners li:hover {
+  transform: translateY(-2px);
 }
 
 .partners__logo {
   display: block;
   width: auto;
-  /* Partner marks come in their own colours; show them as one white set on navy. */
-  filter: brightness(0) invert(1);
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
-}
-.partners__logo:hover {
-  opacity: 1;
 }
 .partners__logo--amiio {
   height: 28px;
@@ -1259,7 +1266,11 @@ html.modal-open {
 
 @media (max-width: 639px) {
   .partners {
-    gap: 14px 28px;
+    gap: 8px;
+  }
+  .partners li {
+    height: 46px;
+    padding: 0 14px;
   }
   .partners__logo--amiio {
     height: 24px;
