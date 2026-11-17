@@ -109,7 +109,12 @@ textarea {
 .waves {
   display: block;
   width: 100%;
-  height: clamp(170px, 27vw, 400px);
+  /* Keep the drawing's own proportions so it is never cropped top or bottom (that cut
+     the top band flat on wide screens). On narrow screens the min-height wins and the
+     drawing is trimmed at the sides only, where the bands run off-page anyway. */
+  height: auto;
+  aspect-ratio: 1440 / 400;
+  min-height: 170px;
   /* Overlap the navy section by 1px so no hairline shows between them. */
   margin-bottom: -1px;
 }

@@ -54,7 +54,6 @@ const RED_BAND = band(
 const SEA_TOP: Pt[] = [[-60, 300], [240, 276], [560, 300], [880, 336], [1180, 316], [1500, 282]];
 const SEA = {
   fill: `${curve(SEA_TOP)} L 1500 ${H + 40} L -60 ${H + 40} Z`,
-  edge: curve(SEA_TOP),
 };
 
 type Props = {
@@ -114,17 +113,18 @@ export function Waves({ flip, className }: Props) {
       </defs>
 
       <g transform={flip ? `translate(${W} 0) scale(-1 1)` : undefined}>
+        {/* The sea sits behind the ribbons and has no edge line, so it reads as the navy
+            section rising into the waves rather than a separate layer laid over them. */}
+        <g>
+          <path d={SEA.fill} fill={ref("gs")} />
+          <path d={SEA.fill} fill={ref("st")} opacity="0.35" mask={ref("ms")} />
+        </g>
+
         <g filter={ref("sh")}>
           <path d={NAVY_BAND.fill} fill={ref("gn")} />
           <path d={NAVY_BAND.fill} fill={ref("st")} opacity="0.35" />
           <path d={NAVY_BAND.edge} fill="none" stroke="#ffffff" strokeWidth="2" opacity="0.9" />
           <path d={NAVY_BAND.inner} fill="none" stroke="#ffffff" strokeWidth="2" opacity="0.6" />
-        </g>
-
-        <g>
-          <path d={SEA.fill} fill={ref("gs")} />
-          <path d={SEA.fill} fill={ref("st")} opacity="0.35" mask={ref("ms")} />
-          <path d={SEA.edge} fill="none" stroke="#ffffff" strokeWidth="2" opacity="0.9" />
         </g>
 
         <g filter={ref("sh")}>
