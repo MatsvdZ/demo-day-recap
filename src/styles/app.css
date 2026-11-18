@@ -298,9 +298,71 @@ textarea {
   color: #ffffff;
 }
 
+/* Live aftermovie: 16:9 like the film, poster first, video only after a click. */
+.movie--live {
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-navy);
+  box-shadow: 8px 8px 0 var(--red);
+}
+
+.movie__start,
+.movie__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.movie__start {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.movie__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.525, 0, 0, 1);
+}
+
+.movie__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(22, 49, 114, 0) 55%, rgba(22, 49, 114, 0.7) 100%);
+}
+
+.movie__start:hover .movie__poster {
+  transform: scale(1.02);
+}
+.movie__start:hover .movie__play,
+.movie__start:focus-visible .movie__play {
+  transform: scale(1.08);
+  background: var(--red);
+}
+.movie__start:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: -6px;
+}
+
+.movie__video {
+  background: #000000;
+  object-fit: contain;
+}
+
 .movie__play {
-  width: 96px;
-  height: 96px;
+  width: 72px;
+  height: 72px;
   border-radius: 999px;
   border: 2px solid #ffffff;
   background: var(--color-navy);
@@ -308,6 +370,27 @@ textarea {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 4px 4px 0 var(--red);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+@media (max-width: 639px) {
+  .movie__play {
+    width: 48px;
+    height: 48px;
+    box-shadow: 3px 3px 0 var(--red);
+  }
+  .movie__play svg {
+    width: 22px;
+    height: 22px;
+  }
+  .movie__overlay {
+    padding: 12px;
+    gap: 10px;
+  }
+  .movie__overlay .movie__label {
+    font-size: 11px;
+  }
 }
 
 .movie__label {
@@ -343,6 +426,150 @@ textarea {
   display: flex;
   align-items: flex-end;
   padding: 12px;
+}
+
+.photo--live {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-navy);
+}
+.photo__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.photo--live img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Most shots are portrait with faces in the upper half (Lightbox.tsx mirrors this). */
+  object-position: 50% 30%;
+  display: block;
+  transition: transform 0.5s var(--ease-photo);
+}
+.photo__zoom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: var(--color-navy);
+  box-shadow: 2px 2px 0 var(--red);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.2s ease, transform 0.3s var(--ease-photo);
+}
+.photo__btn:hover img,
+.photo__btn:focus-visible img {
+  transform: scale(1.05);
+}
+.photo__btn:hover .photo__zoom,
+.photo__btn:focus-visible .photo__zoom {
+  opacity: 1;
+  transform: none;
+}
+.photo__btn:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: -5px;
+}
+
+/* "Zie meer": the panel unfolds (0fr -> 1fr) while the photos rise in, row by row. */
+:root {
+  --ease-photo: cubic-bezier(0.525, 0, 0, 1);
+}
+.gallery {
+  display: flex;
+  flex-direction: column;
+}
+.photos-more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.7s var(--ease-photo);
+}
+.photos-more[data-state="opening"],
+.photos-more[data-state="open"] {
+  grid-template-rows: 1fr;
+}
+.photos-more__clip {
+  min-height: 0;
+  overflow: hidden;
+  /* Room for the photo shadows/outline while clipped. */
+  margin: 0 -8px;
+  padding: 0 8px;
+}
+.photos-more__grid {
+  padding-top: 14px;
+}
+.photos-more__item {
+  display: contents;
+}
+.photos-more__item > .photo {
+  opacity: 0;
+  transform: translateY(28px) scale(0.94);
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s var(--ease-photo);
+  /* Closing: quick, last photo first. */
+  transition-delay: calc((15 - var(--i)) * 12ms);
+}
+.photos-more[data-state="opening"] .photos-more__item > .photo,
+.photos-more[data-state="open"] .photos-more__item > .photo {
+  opacity: 1;
+  transform: none;
+  /* Opening: row by row, a little stagger within each row. */
+  transition-delay: calc(var(--i) * 35ms + 80ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photos-more,
+  .photos-more__item > .photo,
+  .photo--live img,
+  .photo__zoom {
+    transition: none !important;
+  }
+}
+
+.photos__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.more-btn:hover,
+.more-btn:focus-visible {
+  background: #ffffff;
+  color: var(--color-navy);
+}
+.more-btn svg {
+  transition: transform 0.5s var(--ease-photo);
+}
+.more-btn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
 }
 
 .photo__label {
@@ -1359,6 +1586,10 @@ html.modal-open {
   .movie {
     aspect-ratio: 4 / 3;
   }
+  .movie--live {
+    aspect-ratio: 16 / 9;
+    box-shadow: 5px 5px 0 var(--red);
+  }
   .movie__title {
     font-size: 30px;
     line-height: 36px;
@@ -1433,5 +1664,208 @@ html.modal-open {
   .dm[data-state] .dm__code {
     animation: none !important;
     opacity: 1;
+  }
+}
+
+/* ---------- Photo lightbox ---------- */
+
+.lb {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.lb::backdrop {
+  background: transparent;
+}
+.lb__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 22, 56, 0.94);
+  cursor: zoom-out;
+}
+
+.lb__stage {
+  position: relative;
+  /* Fit the photo inside the window, leaving room for the bar and arrows. */
+  width: min(calc(100vw - 176px), calc((100dvh - 150px) * var(--ratio)), 1600px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-navy);
+  box-shadow: 10px 10px 0 var(--red);
+  will-change: transform, clip-path;
+}
+.lb[data-state="opening"] .lb__stage,
+.lb[data-state="closing"] .lb__stage {
+  box-shadow: none;
+}
+.lb__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lb__img--small {
+  filter: blur(6px);
+  transform: scale(1.03);
+}
+.lb__img--large {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lb__img--large[data-loaded] {
+  opacity: 1;
+}
+
+.lb__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 24px;
+  z-index: 1;
+  pointer-events: none;
+}
+.lb__bar > * {
+  pointer-events: auto;
+}
+.lb__count {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--color-sky);
+}
+.lb__actions {
+  display: flex;
+  gap: 10px;
+}
+.lb__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: #ffffff;
+  color: var(--color-navy);
+  font: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--red);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.lb__btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--red);
+}
+.lb__btn--icon {
+  width: 46px;
+  padding: 0;
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+}
+.lb__btn--icon:hover {
+  background: #ffffff;
+  color: var(--color-navy);
+  box-shadow: none;
+}
+.lb__btn:focus-visible,
+.lb__nav:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+.lb__nav {
+  position: absolute;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin-top: -28px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  background: var(--color-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.lb__nav:hover {
+  background: var(--red);
+  transform: scale(1.06);
+}
+.lb__nav--prev {
+  left: 32px;
+}
+.lb__nav--next {
+  right: 32px;
+}
+
+/* Controls arrive once the photo has landed and leave first on close. */
+.lb__bar,
+.lb__nav {
+  transition: opacity 0.25s ease;
+}
+.lb[data-state="opening"] .lb__bar,
+.lb[data-state="opening"] .lb__nav,
+.lb[data-state="closing"] .lb__bar,
+.lb[data-state="closing"] .lb__nav {
+  opacity: 0;
+}
+
+@media (max-width: 639px) {
+  .lb__stage {
+    width: min(calc(100vw - 24px), calc((100dvh - 190px) * var(--ratio)));
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 var(--red);
+  }
+  .lb__bar {
+    padding: 14px 12px;
+  }
+  .lb__btn {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+  .lb__btn--icon {
+    width: 42px;
+    padding: 0;
+  }
+  .lb__nav {
+    top: auto;
+    bottom: 20px;
+    margin-top: 0;
+    width: 50px;
+    height: 50px;
+  }
+  .lb__nav--prev {
+    left: calc(50% - 62px);
+  }
+  .lb__nav--next {
+    right: calc(50% - 62px);
   }
 }

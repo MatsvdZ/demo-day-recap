@@ -3,9 +3,9 @@
  */
 export const config = {
   /** Set to true once the photos are in; hides the "FOTO VOLGT" labels. */
-  photosLive: false,
+  photosLive: true,
   /** Set to true once the aftermovie is available. */
-  movieLive: false,
+  movieLive: true,
   /** Shown while the aftermovie is not live yet. */
   movieDate: "23 november",
   /**
