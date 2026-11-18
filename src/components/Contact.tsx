@@ -15,6 +15,29 @@ const SLOW_MS = 4_000;
 
 type SendError = { title: string; detail: string };
 
+/** Post one submission to Web3Forms; throws a SendError when it doesn't arrive. */
+async function deliver(payload: Record<string, string>, signal: AbortSignal) {
+  let res: Response;
+  try {
+    res = await fetch(config.form.endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+      signal,
+    });
+  } catch (err) {
+    console.error("Contact form failed:", err);
+    throw explain(err);
+  }
+  const data: { success?: unknown; message?: string } = await res.json().catch(() => ({}));
+  // Web3Forms answers { success: true | false, message }.
+  if (!res.ok || String(data.success) !== "true") {
+    const reason = data.message || `HTTP ${res.status} ${res.statusText}`.trim();
+    console.error("Contact form rejected:", reason);
+    throw explain(new Error(reason), reason);
+  }
+}
+
 /** Turn whatever went wrong into a clear Dutch message with the real reason. */
 function explain(err: unknown, serviceMessage?: string): SendError {
   if (err instanceof DOMException && err.name === "AbortError") {
@@ -89,7 +112,9 @@ export function Contact({ picked }: Props) {
       Naam: name,
       "E-mail": email,
       Onderwerp: TOPICS[topic],
-      "Gekozen demo's": pickedDemos.length ? pickedDemos.map((d) => `${d.code} · ${d.title} (${d.speaker})`).join("\n") : "Geen",
+      "Gekozen demo's": pickedDemos.length
+        ? pickedDemos.map((d) => `${d.code} · ${d.title} (${d.speaker}, ${d.company})`).join("\n")
+        : "Geen",
       "Beoordeling avond": rating ? `${rating} van 5 sterren` : "Niet gegeven",
       Bericht: String(f.get("message") ?? "").trim() || "—",
       "Mening over de avond": String(f.get("feedback") ?? "").trim() || "—",
@@ -100,25 +125,10 @@ export function Contact({ picked }: Props) {
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(config.form.endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
-      const data: { success?: unknown; message?: string } = await res.json().catch(() => ({}));
-      // Web3Forms answers { success: true | false, message }.
-      if (!res.ok || String(data.success) !== "true") {
-        const reason = data.message || `HTTP ${res.status} ${res.statusText}`.trim();
-        console.error("Contact form rejected:", reason);
-        setError(explain(new Error(reason), reason));
-        setStatus("error");
-        return;
-      }
+      await deliver(payload, controller.signal);
       setStatus("sent");
     } catch (err) {
-      console.error("Contact form failed:", err);
-      setError(explain(err));
+      setError(err as SendError);
       setStatus("error");
     } finally {
       window.clearTimeout(timer);

@@ -15,6 +15,7 @@ export const config = {
    */
   form: {
     endpoint: "https://api.web3forms.com/submit",
-    accessKey: "2887f06e-ade7-424f-9cf7-3e71588307e8",
+    /** Delivers to niels@adami.ai, the inbox this key was created for. */
+    accessKey: "35b2cb9e-3cdf-4b3f-b373-aaaf5e139b47",
   },
 };
