@@ -17,7 +17,7 @@ export function Evening() {
               Zo zag het eruit.
             </h2>
           </div>
-          <span className="evening__credit">Foto's: [fotograaf] · vrij te delen met vermelding</span>
+          <span className="evening__credit">Foto's: Ana-Maria Hanzu · vrij te delen met vermelding</span>
         </div>
 
         {config.movieLive ? (

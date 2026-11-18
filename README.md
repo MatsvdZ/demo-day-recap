@@ -13,9 +13,9 @@ npm run build    # static output in dist/
 
 ## Publishing
 
-Every push to `main` builds the site and publishes it to GitHub Pages
-(`.github/workflows/deploy.yml`): https://matsvanderzwan.github.io/demo-day-recap/
-One-time setting: repo Settings → Pages → Build and deployment → Source = **GitHub Actions**.
+The site is hosted on Cloudflare (Workers & Pages), connected to this repo: every push to `main`
+builds it with `npm run build` and serves `dist/`. Build settings live in the Cloudflare dashboard.
+Single files there are limited to 25 MiB, so keep videos under that.
 
 ## Filling in content
 
@@ -24,20 +24,20 @@ One-time setting: repo Settings → Pages → Build and deployment → Source = 
 - **Speaker photos:** add a square image as `src/assets/speakers/<slug>.webp` and set `photo: photo("<slug>")`
   on the demo. Without a photo the pop-up shows the speaker's initials. All 16 speakers have a photo.
 - **Photos and aftermovie switches:** `src/config.ts` (`photosLive`, `movieLive`, `movieDate`).
-- **Photographer credit:** `src/components/Evening.tsx` (`[fotograaf]`).
+- **Event photos:** `src/assets/photos/demo-day-NN.webp` (grid, 640px short side) and
+  `src/assets/photos/large/demo-day-NN.jpg` (lightbox + download, 2400px). Sizes for the lightbox are in
+  `src/data/photoSizes.ts`; the first eight shown are `FEATURED` in `src/components/Photos.tsx`.
+- **Aftermovie:** `src/assets/movie/` (poster plus 720p and 1080p MP4), played by `src/components/Movie.tsx`.
+- **Photographer credit:** `src/components/Evening.tsx`.
 
 ## Structure
 
 - `src/styles/tokens.css` — AdamI design-system tokens (from the design export)
 - `src/styles/app.css` — page styles, campaign palette (paper `#F2E7D5`, red `#F2464B`)
-- `src/components/` — Hero, Evening (01), DemoList (02), Contact (03), Footer
+- `src/components/` — Hero, Evening (01, with Movie, Photos and Lightbox), DemoList (02), Contact (03), Footer
 
 ## Contact form
 
 Submissions are emailed via [Web3Forms](https://web3forms.com) to the inbox that the access key in
 `src/config.ts` (`form.accessKey`) was created for. The key is meant to be public; it can only send to
 that inbox.
-
-## Not wired up yet
-
-- The aftermovie play button and photo tiles are placeholders until real media is added.
